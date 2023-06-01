@@ -48,6 +48,7 @@ commit after this answer, see *1c*)
 #### Positiv:
 Distributed Version Control
 Branching and Merging
+
 #### Negativ:
 Learning Curve
 Larger Datasets
