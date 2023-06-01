@@ -502,16 +502,87 @@ total_babies_2021 &lt;- sum(data_2021$Anzahl)</code></pre>
   bigger_baby_boom &lt;- 2021
 } else {
   bigger_baby_boom &lt;- &quot;Both years had an equal number of babies born&quot;
-}</code></pre>
+}
+bigger_baby_boom</code></pre>
+<pre><code>## [1] 2021</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
-<li><p>Add a new column <code>year</code> to both datasets which holds
-the correct year for each.</p></li>
-<li><p>Combine both datasets into one using
-<code>bind_rows()</code>.</p></li>
-<li><p>Combine the counts for same names to determine the most popular
-names across both years. Print out the top 10 names in a nicely
-formatted table for both years. Include a table caption.</p></li>
+<li>Add a new column <code>year</code> to both datasets which holds the
+correct year for each.</li>
 </ol>
+<pre class="r"><code># Add the &#39;year&#39; column to the 2021 dataset
+data_2021$year &lt;- 2021
+
+# Add the &#39;year&#39; column to the 2022 dataset
+data_2022$year &lt;- 2022</code></pre>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Combine both datasets into one using <code>bind_rows()</code>.</li>
+</ol>
+<pre class="r"><code>combined_data &lt;- bind_rows(data_2021, data_2022)</code></pre>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Combine the counts for same names to determine the most popular
+names across both years. Print out the top 10 names in a nicely
+formatted table for both years. Include a table caption.</li>
+</ol>
+<pre class="r"><code># Group the data by name and calculate the total count
+name_counts &lt;- combined_data %&gt;%
+  group_by(Vorname) %&gt;%
+  summarize(Total_Count = sum(Anzahl)) %&gt;%
+  arrange(desc(Total_Count))
+
+# Print the top 10 names in a formatted table
+top_10_names &lt;- head(name_counts, 10)
+kable(top_10_names, caption = &quot;Top 10 Most Popular Names&quot;)</code></pre>
+<table>
+<caption>Top 10 Most Popular Names</caption>
+<thead>
+<tr class="header">
+<th align="left">Vorname</th>
+<th align="right">Total_Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Maximilian</td>
+<td align="right">240</td>
+</tr>
+<tr class="even">
+<td align="left">Emilia</td>
+<td align="right">234</td>
+</tr>
+<tr class="odd">
+<td align="left">Felix</td>
+<td align="right">220</td>
+</tr>
+<tr class="even">
+<td align="left">Anton</td>
+<td align="right">206</td>
+</tr>
+<tr class="odd">
+<td align="left">Emma</td>
+<td align="right">199</td>
+</tr>
+<tr class="even">
+<td align="left">Leon</td>
+<td align="right">195</td>
+</tr>
+<tr class="odd">
+<td align="left">Noah</td>
+<td align="right">185</td>
+</tr>
+<tr class="even">
+<td align="left">Jakob</td>
+<td align="right">180</td>
+</tr>
+<tr class="odd">
+<td align="left">Anna</td>
+<td align="right">178</td>
+</tr>
+<tr class="even">
+<td align="left">Lukas</td>
+<td align="right">173</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -533,16 +604,73 @@ not work. Correct the code. Also calculate the rowwise means.</li>
 <p>column_means &lt;- lapply(tax_data<span class="math display">\[,
 -1\]</span>, 2, mean)</p>
 <p>column_means</p>
+<div id="prompt" class="section level4">
+<h4>Prompt:</h4>
+<p>Task</p>
+</div>
+<div id="solution" class="section level4">
+<h4>Solution:</h4>
+<p>The code provided is attempting to calculate the column-wise means of
+the numeric columns in the tax_data data frame using the lapply()
+function. However, the second argument of lapply() is incorrect and
+should be replaced with the correct apply function.</p>
+<p>The correct apply function to use in this case is sapply() because it
+simplifies the output into a vector or matrix, which is suitable for
+calculating column-wise means.</p>
+<p>Here’s the corrected code to calculate the column-wise means and
+row-wise means:</p>
+<pre class="r"><code># Create a sample data frame
+tax_data &lt;- data.frame(
+  Name = c(&quot;Munich GmbH&quot;, &quot;ABC Inc.&quot;, &quot;Backpacks 1980&quot;, &quot;Bavarian Circus&quot;),
+  Tax_2019 = c(5000, 4000, 6000, 3500),
+  Tax_2020 = c(4800, 4200, 5800, 3700),
+  Tax_2021 = c(5200, 3800, 5900, 3400)
+)
+
+# Calculate column-wise means
+column_means &lt;- sapply(tax_data[, -1], mean)
+
+# Calculate row-wise means
+row_means &lt;- rowMeans(tax_data[, -1])
+
+# Print the column-wise means
+column_means</code></pre>
+<pre><code>## Tax_2019 Tax_2020 Tax_2021 
+##     4625     4625     4575</code></pre>
+<pre class="r"><code># Print the row-wise means
+row_means</code></pre>
+<pre><code>## [1] 5000.000 4000.000 5900.000 3533.333</code></pre>
+<p>After executing the corrected code, column_means will contain the
+column-wise means for the numeric columns (Tax_2019, Tax_2020,
+Tax_2021), and row_means will contain the row-wise means for each row of
+the numeric columns.</p>
+<p>Please note that in the corrected code, sapply() is used instead of
+lapply() to calculate the column-wise means. Additionally, rowMeans() is
+used to calculate the row-wise means.</p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Using ChatGPT try to understand what the rapply() function does.
 Create an easy example with mock data where the function is used and
 explain it in your words.</li>
 </ol>
 </div>
-<div id="final-note" class="section level2">
-<h2>Final Note</h2>
-<p>Make sure to push all your commits and changes to GitHub before
-submittining the exercise sheet.</p>
+<div id="data" class="section level4">
+<h4>Data:</h4>
+<pre class="r"><code>directory &lt;- list(
+  file1 = &quot;file1.txt&quot;,
+  subdirectory1 = list(
+    file2 = &quot;file2.txt&quot;,
+    file3 = &quot;file3.txt&quot;
+  ),
+  subdirectory2 = list(
+    file4 = &quot;file4.txt&quot;
+  )
+)</code></pre>
+<pre class="r"><code>char_count &lt;- rapply(directory, function(x) nchar(x), how = &quot;list&quot;)</code></pre>
+<pre class="r"><code>char_count$file1</code></pre>
+<pre><code>## [1] 9</code></pre>
+<pre class="r"><code>char_count$subdirectory1$file2</code></pre>
+<pre><code>## [1] 9</code></pre>
+</div>
 </div>
 
 
