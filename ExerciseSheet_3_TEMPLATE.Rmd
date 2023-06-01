@@ -271,7 +271,7 @@ b)  Using ChatGPT try to understand what the rapply() function does.
 directory <- list(
   file1 = "file1.txt",
   subdirectory1 = list(
-    file2 = "file2.txt",
+    file2 = "file2neu.txt",
     file3 = "file3.txt"
   ),
   subdirectory2 = list(
@@ -290,7 +290,8 @@ char_count$file1
 char_count$subdirectory1$file2
 ```
 
-
+rapply() is similar to the lapply() function. It applies a specified function to each element of a list, and if any of the elements are themselves lists, it recursively applies the function to those nested lists as well. rapply() looks through all the nested structures before it gives out a result. It can also simplefy resulst by making them a vector, matrix or array. Or like in the example into a list. 
+In summary the lapply function can be used when the desired result is a list and the rapply fuction can be used when the desired result is a result.
 
 
 
